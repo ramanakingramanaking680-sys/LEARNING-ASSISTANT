@@ -1,0 +1,595 @@
+Complete Learning Assistant Program – HTML, CSS & JavaScript
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Learning Assistant</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        .header h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 15px;
+            opacity: 0.9;
+        }
+
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            padding: 15px;
+            background: #f5f5ff;
+        }
+
+        .feature {
+            background: white;
+            border-radius: 10px;
+            padding: 12px 5px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            transition: 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-3px);
+            background: #eeeeff;
+        }
+
+        .feature span {
+            display: block;
+            font-size: 25px;
+            margin-bottom: 5px;
+        }
+
+        .feature small {
+            color: #444;
+        }
+
+        /* Chat */
+        .chat-box {
+            height: 430px;
+            padding: 20px;
+            overflow-y: auto;
+            background: #fafafa;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .message-content {
+            max-width: 75%;
+            padding: 12px 16px;
+            border-radius: 15px;
+            line-height: 1.5;
+            font-size: 15px;
+            white-space: pre-line;
+        }
+
+        .bot {
+            justify-content: flex-start;
+        }
+
+        .bot .message-content {
+            background: #e9e7ff;
+            color: #222;
+            border-bottom-left-radius: 3px;
+        }
+
+        .user {
+            justify-content: flex-end;
+        }
+
+        .user .message-content {
+            background: #4f46e5;
+            color: white;
+            border-bottom-right-radius: 3px;
+        }
+
+        /* Typing */
+        .typing {
+            display: none;
+            color: #666;
+            font-size: 14px;
+            padding: 5px 20px;
+        }
+
+        /* Input */
+        .input-area {
+            display: flex;
+            gap: 10px;
+            padding: 15px;
+            border-top: 1px solid #ddd;
+            background: white;
+        }
+
+        #userInput {
+            flex: 1;
+            padding: 13px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            outline: none;
+            font-size: 15px;
+        }
+
+        #userInput:focus {
+            border-color: #6366f1;
+        }
+
+        .send-btn {
+            border: none;
+            background: #4f46e5;
+            color: white;
+            padding: 0 22px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .send-btn:hover {
+            background: #3730a3;
+        }
+
+        .clear-btn {
+            border: none;
+            background: #ef4444;
+            color: white;
+            padding: 0 15px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .clear-btn:hover {
+            background: #dc2626;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 12px;
+            background: #f5f5f5;
+            color: #777;
+            font-size: 12px;
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .chat-box {
+                height: 400px;
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+
+            .input-area {
+                flex-wrap: wrap;
+            }
+
+            #userInput {
+                width: 100%;
+                flex-basis: 100%;
+            }
+
+            .send-btn,
+            .clear-btn {
+                height: 42px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <div class="header">
+        <h1>🎓 AI Learning Assistant</h1>
+        <p>Your Personal Study Assistant</p>
+    </div>
+
+    <!-- Quick Features -->
+    <div class="features">
+
+        <div class="feature" onclick="quickQuestion('Explain HTML')">
+            <span>🌐</span>
+            <small>HTML</small>
+        </div>
+
+        <div class="feature" onclick="quickQuestion('Explain CSS')">
+            <span>🎨</span>
+            <small>CSS</small>
+        </div>
+
+        <div class="feature" onclick="quickQuestion('Explain JavaScript')">
+            <span>💻</span>
+            <small>JavaScript</small>
+        </div>
+
+        <div class="feature" onclick="quickQuestion('Give me a study tip')">
+            <span>📚</span>
+            <small>Study Tips</small>
+        </div>
+
+    </div>
+
+    <!-- Chat Area -->
+    <div class="chat-box" id="chatBox">
+
+        <div class="message bot">
+            <div class="message-content">
+                👋 Hello! Welcome to the Learning Assistant.
+
+                I can help you learn:
+                • HTML
+                • CSS
+                • JavaScript
+                • Artificial Intelligence
+                • Computer Science
+                • Study techniques
+
+                Ask me a question to get started!
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Typing Indicator -->
+    <div class="typing" id="typing">
+        🤖 Learning Assistant is typing...
+    </div>
+
+    <!-- Input -->
+    <div class="input-area">
+
+        <input
+            type="text"
+            id="userInput"
+            placeholder="Type your question here..."
+            autocomplete="off"
+        >
+
+        <button class="send-btn" onclick="sendMessage()">
+            Send
+        </button>
+
+        <button class="clear-btn" onclick="clearChat()">
+            Clear
+        </button>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        Learning Assistant | HTML + CSS + JavaScript
+    </div>
+
+</div>
+
+
+<script>
+
+    // Get HTML elements
+    const userInput = document.getElementById("userInput");
+    const chatBox = document.getElementById("chatBox");
+    const typing = document.getElementById("typing");
+
+
+    // Send message when Enter key is pressed
+    userInput.addEventListener("keypress", function(event) {
+
+        if (event.key === "Enter") {
+            sendMessage();
+        }
+
+    });
+
+
+    // Send message
+    function sendMessage() {
+
+        const question = userInput.value.trim();
+
+        if (question === "") {
+            return;
+        }
+
+        // Add user message
+        addMessage(question, "user");
+
+        // Clear input
+        userInput.value = "";
+
+        // Show typing
+        typing.style.display = "block";
+
+        // Generate response
+        setTimeout(function() {
+
+            const answer = getAnswer(question);
+
+            typing.style.display = "none";
+
+            addMessage(answer, "bot");
+
+        }, 700);
+    }
+
+
+    // Add message to chat
+    function addMessage(text, sender) {
+
+        const message = document.createElement("div");
+
+        message.classList.add("message", sender);
+
+        const content = document.createElement("div");
+
+        content.classList.add("message-content");
+
+        content.textContent = text;
+
+        message.appendChild(content);
+
+        chatBox.appendChild(message);
+
+        // Automatically scroll down
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+
+    // Quick question buttons
+    function quickQuestion(question) {
+
+        userInput.value = question;
+
+        sendMessage();
+
+    }
+
+
+    // Generate answers
+    function getAnswer(question) {
+
+        const q = question.toLowerCase();
+
+
+        // Greetings
+        if (
+            q.includes("hello") ||
+            q.includes("hi") ||
+            q.includes("hey")
+        ) {
+
+            return "👋 Hello! How can I help you with your studies today?";
+
+        }
+
+
+        // HTML
+        if (
+            q.includes("html") ||
+            q.includes("hypertext")
+        ) {
+
+            return "🌐 HTML stands for HyperText Markup Language.\n\nHTML is used to create the basic structure of a web page.\n\nCommon HTML elements include:\n• <h1> - Heading\n• <p> - Paragraph\n• <img> - Image\n• <a> - Link\n• <button> - Button";
+
+        }
+
+
+        // CSS
+        if (
+            q.includes("css") ||
+            q.includes("stylesheet")
+        ) {
+
+            return "🎨 CSS stands for Cascading Style Sheets.\n\nCSS is used to design and style HTML web pages.\n\nIt can control:\n• Colors\n• Fonts\n• Layout\n• Spacing\n• Animations\n• Responsive design";
+
+        }
+
+
+        // JavaScript
+        if (
+            q.includes("javascript") ||
+            q.includes("java script") ||
+            q === "js"
+        ) {
+
+            return "💻 JavaScript is a programming language used to make websites interactive.\n\nIt can be used for:\n• Buttons\n• Forms\n• Calculations\n• Animations\n• Games\n• Web applications";
+
+        }
+
+
+        // AI
+        if (
+            q.includes("artificial intelligence") ||
+            q.includes("what is ai") ||
+            q === "ai"
+        ) {
+
+            return "🤖 Artificial Intelligence (AI) is a technology that enables computers to perform tasks that normally require human intelligence.\n\nExamples include:\n• Chatbots\n• Voice assistants\n• Image recognition\n• Recommendation systems\n• Language translation";
+
+        }
+
+
+        // Computer
+        if (
+            q.includes("computer") ||
+            q.includes("what is a computer")
+        ) {
+
+            return "🖥️ A computer is an electronic device that accepts data, processes it, stores information, and produces output.\n\nThe basic functions are:\n1. Input\n2. Processing\n3. Output\n4. Storage";
+
+        }
+
+
+        // Programming
+        if (
+            q.includes("programming") ||
+            q.includes("programming language")
+        ) {
+
+            return "👨‍💻 Programming is the process of creating instructions for a computer.\n\nPopular programming languages include:\n• Python\n• Java\n• JavaScript\n• C\n• C++\n• C#";
+
+        }
+
+
+        // Python
+        if (q.includes("python")) {
+
+            return "🐍 Python is a high-level, easy-to-learn programming language.\n\nIt is commonly used for:\n• Web development\n• Artificial Intelligence\n• Data Science\n• Automation\n• Machine Learning";
+
+        }
+
+
+        // Study tips
+        if (
+            q.includes("study") ||
+            q.includes("study tip") ||
+            q.includes("learn")
+        ) {
+
+            return "📚 Study Tips:\n\n1. Set a clear study goal.\n2. Study in short focused sessions.\n3. Take useful notes.\n4. Practice with questions.\n5. Revise regularly.\n6. Take short breaks.\n7. Test yourself after studying.";
+
+        }
+
+
+        // Exam
+        if (
+            q.includes("exam") ||
+            q.includes("examination")
+        ) {
+
+            return "📝 Exam Preparation Tips:\n\n• Create a study timetable.\n• Focus on important topics.\n• Practice previous questions.\n• Revise your notes.\n• Take mock tests.\n• Sleep well before the exam.\n• Stay calm and manage your time.";
+
+        }
+
+
+        // Quiz
+        if (
+            q.includes("quiz") ||
+            q.includes("question")
+        ) {
+
+            return "🧠 Here is a quick question:\n\nWhat does HTML stand for?\n\nA) HyperText Markup Language\nB) HighText Machine Language\nC) Hyper Transfer Markup Language\nD) Home Tool Markup Language\n\nAnswer: A) HyperText Markup Language";
+
+        }
+
+
+        // Web development
+        if (
+            q.includes("web development") ||
+            q.includes("website")
+        ) {
+
+            return "🌐 Web development involves creating websites and web applications.\n\nThe three basic technologies are:\n\nHTML → Structure\nCSS → Design\nJavaScript → Functionality";
+
+        }
+
+
+        // Thank you
+        if (
+            q.includes("thank") ||
+            q.includes("thanks")
+        ) {
+
+            return "😊 You're welcome! Keep learning and practicing. Good luck with your studies!";
+
+        }
+
+
+        // Bye
+        if (
+            q.includes("bye") ||
+            q.includes("goodbye")
+        ) {
+
+            return "👋 Goodbye! Keep learning and have a great day!";
+
+        }
+
+
+        // Default response
+        return "🤔 I don't have an answer for that question yet.\n\nTry asking me about:\n• HTML\n• CSS\n• JavaScript\n• Python\n• AI\n• Computers\n• Programming\n• Web Development\n• Study Tips\n• Exams\n• Quiz";
+
+    }
+
+
+    // Clear chat
+    function clearChat() {
+
+        chatBox.innerHTML = `
+            <div class="message bot">
+                <div class="message-content">
+                    👋 Chat cleared!
+
+                    Hello! I am your Learning Assistant.
+                    Ask me a question to start learning.
+                </div>
+            </div>
+        `;
+
+    }
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
